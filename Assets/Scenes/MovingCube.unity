@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 524456552}
   - component: {fileID: 524456551}
   - component: {fileID: 524456550}
+  - component: {fileID: 524456553}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -314,13 +315,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524456549}
   m_LocalRotation: {x: -0.0052407603, y: -0.0008426229, z: -0.006932201, w: 0.9999619}
-  m_LocalPosition: {x: 1.17, y: 4.01, z: -8.95}
+  m_LocalPosition: {x: 1.18, y: 3.97, z: -12.68}
   m_LocalScale: {x: 1, y: 1, z: 0.15334}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.601, y: -0.092, z: -0.794}
+--- !u!114 &524456553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524456549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd11849744216f7478dc9f4ce5212f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2050126897}
+  offset: {x: 0, y: 2, z: -10}
 --- !u!1 &563383315
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +389,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c86ebf5523d34d18a3ccd16de3366b6, type: 2}
+  - {fileID: 2100000, guid: edd2fe659f527a24e99cac1cdd46f59a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -567,7 +582,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 6
-  springConstant: 100
+  springConstant: 0.04
+  maxSpeed: 2
+  forceX: 0
 --- !u!54 &2050126893
 Rigidbody:
   m_ObjectHideFlags: 0

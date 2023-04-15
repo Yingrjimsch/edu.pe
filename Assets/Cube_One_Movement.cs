@@ -1,15 +1,22 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+using System.IO;
 
 public class Cube_One_Movement : MonoBehaviour
 {
     private Rigidbody rigidBody;
 
     public int pushForce; // N/m
-    public float springConstant = 2;
-
+    public float springConstant = 0.0002f;
+    public float maxSpeed = 2;
     private float startCompressionX;
     private float auslenkung;
+    private float currentTimeStep; // s
+    public float forceX;
+    private List<List<float>> timeSeries;
 
     private bool accelerate = true;
 
@@ -18,6 +25,7 @@ public class Cube_One_Movement : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        timeSeries = new List<List<float>>();
     }
 
     // Update is called once per frame
@@ -28,38 +36,49 @@ public class Cube_One_Movement : MonoBehaviour
     // FixedUpdate can be called multiple times per frame
     void FixedUpdate()
     {
-        if (Math.Abs(rigidBody.velocity.x) > 2 && accelerate) 
+        if (Math.Abs(rigidBody.velocity.x) >= 2 && accelerate) 
         {
+            Debug.Log("start");
             startCompressionX = rigidBody.position.x;
             accelerate = false;
         }
         if (!accelerate) {
-            auslenkung = Math.Abs(auslenkung - startCompressionX);
+            auslenkung = rigidBody.position.x <= startCompressionX ? 0 : Math.Abs(rigidBody.position.x - startCompressionX);
+            Debug.Log("Auslenkung " + auslenkung);
+            float springForce = -springConstant * auslenkung;
             Debug.Log("2 erreicht");
-            rigidBody.AddForce(new Vector3(1 - springConstant * auslenkung, 0f, 0f));    
+            forceX = forceX == 0 ? springForce : forceX + springForce;
+            rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
+
+            currentTimeStep += Time.deltaTime;
+            timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x, rigidBody.velocity.x, forceX });
             return;
-
         }
-        float forceX; // N
         forceX = 1;
-
         Debug.Log(forceX);
         rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
         Debug.Log(Math.Abs(rigidBody.velocity.x));
-        /*if (Math.Abs(rigidBody.velocity.x) > 2 && accelerate)
-        {
-            //accelerate = false;
-            rigidBody.AddForce(new Vector3(rigidBody.velocity.x * -1, 0f, 0f));
-        //}
 
-        /*if (accelerate)
-        {
-            forceX = rigidBody.position.x * pushForce;
-            rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
-        }*/
+        currentTimeStep += Time.deltaTime;
+        timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x, rigidBody.velocity.x, forceX });
     }
 
     void OnApplicationQuit()
     {
+        WriteTimeSeriesToCSV();
+    }
+
+    void WriteTimeSeriesToCSV()
+    {
+        using (var streamWriter = new StreamWriter("time_series_exercise2.csv"))
+        {
+            streamWriter.WriteLine("t,x(t),v(t),F(t) (added)");
+            Debug.Log(timeSeries);
+            foreach (List<float> timeStep in timeSeries)
+            {
+                streamWriter.WriteLine(string.Join(",", timeStep));
+                streamWriter.Flush();
+            }
+        }
     }
 }
