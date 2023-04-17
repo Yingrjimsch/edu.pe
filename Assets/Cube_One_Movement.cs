@@ -40,15 +40,18 @@ public class Cube_One_Movement : MonoBehaviour
         {
             Debug.Log("start");
             startCompressionX = rigidBody.position.x;
+            forceX = 0f;
+            rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
             accelerate = false;
         }
         if (!accelerate) {
             auslenkung = rigidBody.position.x <= startCompressionX ? 0 : Math.Abs(rigidBody.position.x - startCompressionX);
             Debug.Log("Auslenkung " + auslenkung);
-            float springForce = -springConstant * auslenkung;
+            float springForce = auslenkung == 0 ? 0: -springConstant * auslenkung;
+            Debug.Log("Springforce" + springForce);
             Debug.Log("2 erreicht");
-            forceX = forceX == 0 ? springForce : forceX + springForce;
-            rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
+            //forceX = forceX == 0 ? springForce: forceX + springForce;
+            rigidBody.AddForce(new Vector3(springForce, 0f, 0f));
 
             currentTimeStep += Time.deltaTime;
             timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x , GameObject.Find("Cube_Two").GetComponent<Rigidbody>().position.x,
@@ -77,7 +80,7 @@ public class Cube_One_Movement : MonoBehaviour
         using (var streamWriter = new StreamWriter("time_series_exercise2.csv"))
         {
             //streamWriter.WriteLine("t,x(t),v(t),F(t) (added)");
-            streamWriter.WriteLine("t,x_cubeOne(t),x_cubeTwo(t), v_cubeOne(t),v_cubeTwo(t), p_cubeOne(t), p_cubeTwo(t)");
+            streamWriter.WriteLine("t,x_cubeOne(t),x_cubeTwo(t),v_cubeOne(t),v_cubeTwo(t),p_cubeOne(t),p_cubeTwo(t)");
             Debug.Log(timeSeries);
             foreach (List<float> timeStep in timeSeries)
             {
