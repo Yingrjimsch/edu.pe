@@ -39,7 +39,7 @@ public class Cube_One_Movement : MonoBehaviour
         if (Math.Abs(rigidBody.velocity.x) >= 2 && accelerate) 
         {
             Debug.Log("start");
-            startCompressionX = rigidBody.position.x;
+            startCompressionX = rigidBody.position.x + 5f;
             forceX = 0f;
             rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
             accelerate = false;
