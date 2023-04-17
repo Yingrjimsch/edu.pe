@@ -447,6 +447,8 @@ GameObject:
   - component: {fileID: 1633541162}
   - component: {fileID: 1633541161}
   - component: {fileID: 1633541160}
+  - component: {fileID: 1633541166}
+  - component: {fileID: 1633541165}
   m_Layer: 0
   m_Name: Cube_Two
   m_TagString: Untagged
@@ -548,6 +550,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1633541165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633541159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92e009540c5817479a9b05a8b583b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeOne: {fileID: 2050126893}
+--- !u!138 &1633541166
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633541159}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 1
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &2050126891
 GameObject:
   m_ObjectHideFlags: 0
