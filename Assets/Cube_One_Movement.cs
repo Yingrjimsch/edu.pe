@@ -51,7 +51,9 @@ public class Cube_One_Movement : MonoBehaviour
             rigidBody.AddForce(new Vector3(forceX, 0f, 0f));
 
             currentTimeStep += Time.deltaTime;
-            timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x, rigidBody.velocity.x, forceX });
+            timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x , GameObject.Find("Cube_Two").GetComponent<Rigidbody>().position.x,
+            rigidBody.velocity.x, GameObject.Find("Cube_Two").GetComponent<Rigidbody>().velocity.x,
+            rigidBody.velocity.x * rigidBody.mass, GameObject.Find("Cube_Two").GetComponent<Rigidbody>().velocity.x * GameObject.Find("Cube_Two").GetComponent<Rigidbody>().mass });
             return;
         }
         forceX = 1;
@@ -60,7 +62,9 @@ public class Cube_One_Movement : MonoBehaviour
         Debug.Log(Math.Abs(rigidBody.velocity.x));
 
         currentTimeStep += Time.deltaTime;
-        timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x, rigidBody.velocity.x, forceX });
+        timeSeries.Add(new List<float>() { currentTimeStep, rigidBody.position.x , GameObject.Find("Cube_Two").GetComponent<Rigidbody>().position.x,
+        rigidBody.velocity.x, GameObject.Find("Cube_Two").GetComponent<Rigidbody>().velocity.x,
+        rigidBody.velocity.x * rigidBody.mass, GameObject.Find("Cube_Two").GetComponent<Rigidbody>().velocity.x * GameObject.Find("Cube_Two").GetComponent<Rigidbody>().mass });
     }
 
     void OnApplicationQuit()
@@ -72,7 +76,8 @@ public class Cube_One_Movement : MonoBehaviour
     {
         using (var streamWriter = new StreamWriter("time_series_exercise2.csv"))
         {
-            streamWriter.WriteLine("t,x(t),v(t),F(t) (added)");
+            //streamWriter.WriteLine("t,x(t),v(t),F(t) (added)");
+            streamWriter.WriteLine("t,x_cubeOne(t),x_cubeTwo(t), v_cubeOne(t),v_cubeTwo(t), p_cubeOne(t), p_cubeTwo(t)");
             Debug.Log(timeSeries);
             foreach (List<float> timeStep in timeSeries)
             {
