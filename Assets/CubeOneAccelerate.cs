@@ -7,8 +7,6 @@ using System.IO;
 
 public class CubeOneAccelerate : MonoBehaviour
 {
-	private Rigidbody rigidBody;
-
 	public float maxSpeed = 2;
 	public Cube cube;
 	public float forceX = 1;
@@ -16,7 +14,6 @@ public class CubeOneAccelerate : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		rigidBody = GetComponent<Rigidbody>();
 	}
 
 	// Update is called once per frame
