@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 563383318}
   - component: {fileID: 563383317}
   - component: {fileID: 563383316}
+  - component: {fileID: 563383320}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -434,6 +435,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563383320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563383315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3af131b43e9da4c93284cba61c4066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeOne: {fileID: 2050126893}
+  cubeTwo: {fileID: 1633541160}
 --- !u!1 &1633541159
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +607,8 @@ GameObject:
   - component: {fileID: 2050126894}
   - component: {fileID: 2050126893}
   - component: {fileID: 2050126892}
+  - component: {fileID: 2050126899}
+  - component: {fileID: 2050126898}
   m_Layer: 0
   m_Name: Cube_One
   m_TagString: Untagged
@@ -611,10 +628,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200156b9717e4aa46a480362141c3ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 6
-  springConstant: 2
   maxSpeed: 2
-  forceX: 0
+  cube: {fileID: 2050126899}
+  forceX: 1
 --- !u!54 &2050126893
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -702,13 +718,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050126891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0.75, z: 0}
+  m_LocalPosition: {x: 1.79, y: 0.75, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050126898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050126891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c8b4933afb05342b704da99337fb29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  springConstant: 2
+  cube: {fileID: 2050126899}
+--- !u!114 &2050126899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050126891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83cf0a2d72787e94aa8f5d9a4791f50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2125898958
 GameObject:
   m_ObjectHideFlags: 0
