@@ -29,7 +29,7 @@ public class CubeControllerJoint : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         joint.anchor = transform.InverseTransformPoint(contact.point);
         joint.connectedBody = collision.contacts[0].otherCollider.transform.GetComponent<Rigidbody>();
-
+        Debug.Log("After Joint" + rigidBody.velocity.x);
         // Stops objects from continuing to collide and creating more joints
         joint.enableCollision = false;
     }
