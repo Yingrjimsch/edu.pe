@@ -6,5 +6,6 @@ public enum State
 {
 	Accelerate,
 	Compress,
-	FreeFloating
+	FreeFloating,
+	Swinging
 }
