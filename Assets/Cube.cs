@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
@@ -5,6 +6,7 @@ public class Cube : MonoBehaviour
 	private Rigidbody rigidBody;
 	private State state;
 	private float forceX;
+	private readonly float sideLength = 1.5f;
 
 	void Start()
 	{
@@ -41,5 +43,10 @@ public class Cube : MonoBehaviour
 	public float GetPositionX()
 	{
 		return rigidBody.position.x;
+	}
+
+	public float GetSquare()
+	{
+		return Convert.ToSingle(Math.Pow(sideLength, 2));
 	}
 }

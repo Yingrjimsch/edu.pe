@@ -16,67 +16,61 @@ public class CubeRopeHandler : MonoBehaviour
     private readonly float ropeLength = 6f;
     private readonly float gravity = 9.81f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private readonly float Cw = 1.1f;
+    private readonly float rhoAir = 1.2f;
 
     // FixedUpdate can be called multiple times per frame
-    private void FixedUpdate() 
+    private void FixedUpdate()
+	{
+		if (cube.GetState() != State.Swinging && cube1.position.x <= ropePositions[0])
+		{
+			Debug.Log("Start Swinging");
+			Debug.Log("Cube1 Mass" + cube1.mass);
+			cube.SetState(State.Swinging);
+		}
+
+		if (cube.GetState() != State.Swinging) return;
+
+		// calculate Alpha
+		float alpha = CalcAlpha();
+
+		// Add force to Cube 1
+		AddForceToRope(alpha, cube1);
+		AddViscousFriction(cube1);
+
+		// Add force to Cube 2
+		AddForceToRope(alpha, cube2);
+		AddViscousFriction(cube2);
+	}
+
+	private float CalcAlpha()
+	{
+		Vector3 ropeHookPoint = new(ropePositions[0], ropeLength, 0f);
+		Vector3 diffVector = ropeHookPoint - cube1.position;
+		return Mathf.Atan2(diffVector.x, diffVector.y); ;
+	}
+
+	private void AddForceToRope(float alpha, Rigidbody cube)
     {
-        if (cube1.position.x <= ropePositions[0]) {
-            cube.SetState(State.Swinging);
-        }
+        // Radialer Anteil der Gewichtskraft Fg = m * g * cos(alpha)
+        double forceG = cube.mass * gravity * Math.Cos(alpha);
+        // Zentripetalkraft Fz = m * v**2 / R
+        double forceZ = cube.mass * Math.Pow(cube.velocity.magnitude, 2) / ropeLength;
 
-        if (cube.GetState() != State.Swinging) return;
-
-        // calculate Alpha
-        Vector3 ropeHookPoint = new Vector3(ropePositions[0],ropeLength,0f);
-        Vector3 diffVector = ropeHookPoint - cube1.position;
-        float alpha = Mathf.Atan2(diffVector.x, diffVector.y);
-
-        // Add force to Cube 1
-        AddForceToRope(alpha, cube1);
-        AddViscousFriction(alpha, cube1);
-
-        // Add force to Cube 2
-        AddForceToRope(alpha, cube2);
-        AddViscousFriction(alpha, cube2);
-    }
-
-    private void AddForceToRope(double alpha, Rigidbody cube)
-    {
-
-        float forceG = cube.mass * gravity * (float)Math.Cos(alpha);;
-        float forceZ = cube.mass * cube.velocity.magnitude * cube.velocity.magnitude / ropeLength;
-
-        float forceX = (forceG + forceZ) * (float)Math.Sin(alpha);
-        float forceY = (forceG + forceZ) * (float)Math.Cos(alpha);
+        double forceX = (forceG + forceZ) * Math.Sin(alpha);
+        double forceY = (forceG + forceZ) * Math.Cos(alpha);
 
         // finally add force
-        cube.AddForce(new Vector3(forceX, forceY, 0f));
+        cube.AddForce(new Vector3(Convert.ToSingle(forceX), Convert.ToSingle(forceY), 0f));
     }
 
-    private void AddViscousFriction(double alpha, Rigidbody cube)
+    private void AddViscousFriction(Rigidbody cube)
     {
-        float Cw = 1.1f;
-        float rhoAir = 1.2f;
-
         float velocityX = cube.velocity.x;
-
-        // one side of a cube is 1.5**2
-        float cubeSquare = 2.25f; 
-        
+                
         Vector3 velocityVec = cube.velocity.normalized;
 
-        cube.AddForce(-0.5f * cubeSquare * rhoAir * Cw * velocityX * velocityX * velocityVec);
+        cube.AddForce(-0.5f * this.cube.GetSquare() * rhoAir * Cw * velocityX * velocityX * velocityVec);
     }
 
 
